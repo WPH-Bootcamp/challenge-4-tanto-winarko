@@ -52,21 +52,24 @@ function markTodoCompleted() {
   );
   inputToDoNum = parseInt(inputToDoNum.trim());
 
-  if (inputToDoNum <= 0 || inputToDoNum > todos.length) {
-    console.log("Invalid number. Please enter a valid number from the list.");
-    return;
-  } else if (isNaN(inputToDoNum)) {
-    console.log("Invalid number. Please enter a valid number from the list.");
-    return;
-  } else {
+  if (inputToDoNum > 0 && inputToDoNum <= todos.length) {
     todos[inputToDoNum - 1].isCompleted = true;
     console.log(
       "Your To-Do Number: " +
         inputToDoNum +
         ". " +
-        todos[inputToDoNum - 1].text +
         " has been successfully marked as completed"
     );
+  } else {
+    console.log("Invalid number. Please enter a valid number from the list.");
+    /*todos[inputToDoNum - 1].isCompleted = true;
+    console.log(
+      "Your To-Do Number: " +
+        inputToDoNum +
+        ". " +
+        " has been successfully marked as completed"
+    );*/
+    console.log("Successfully marked as completed");
   }
 }
 
@@ -88,30 +91,21 @@ function deleteTodo() {
     return;
   }
 
-  if (isNaN(inputToDoNum.trim())) {
-    console.log(
-      "Please input a valid to-do Number. You have inserted a non number character."
-    );
-    return;
-  } else {
+  if (!isNaN(inputToDoNum.trim())) {
     inputToDoNum = parseInt(inputToDoNum.trim());
 
-    if (todos.length === 0) {
-      console.log("There is no to-do list exist");
-    } else {
+    if (todos.length > 0) {
       if (inputToDoNum < 1 || inputToDoNum > todos.length) {
         console.log(
           "Invalid number. Please enter a valid number from the list."
         );
         return;
       } else {
-        let deletedText = todos[inputToDoNum - 1].text;
+        //let deletedText = todos[inputToDoNum - 1].text;
         todos.splice(inputToDoNum - 1, 1);
         console.log(
-          "Your To-Do: " +
+          "Your To-Do Number: " +
             inputToDoNum +
-            ". " +
-            deletedText +
             " has been successfully deleted"
         );
       }
@@ -132,11 +126,9 @@ function listTodos() {
   } else {
     console.log("***  YOUR TO-DO LIST  ***\n");
 
-    let toDoStatus = "[ACTIVE]";
     for (let toDoNum in todos) {
-      if (todos[toDoNum].isCompleted) {
-        toDoStatus = "[DONE]";
-      } else {
+      let toDoStatus = "[DONE]";
+      if (!todos[toDoNum].isCompleted) {
         toDoStatus = "[ACTIVE]";
       }
 
@@ -171,17 +163,11 @@ function runTodoApp() {
     let inputMenuNum = prompt("Please type Menu number that want to perform: ");
     inputMenuNum = Number(inputMenuNum.trim());
 
-    if (isNaN(inputMenuNum)) {
+    /*if (isNaN(inputMenuNum) || inputMenuNum < 1 || inputMenuNum > 5) {
       console.log(
-        "Please input a valid to-do Number. Only number 1 to 5 is allowed"
+        "Please input a valid Menu Number. Only Menu number 1 to 5 is allowed"
       );
-      return;
-    } else if (inputMenuNum < 1 || inputMenuNum > 5) {
-      console.log(
-        "Please input a valid to-do Number. The number you input is out of range"
-      );
-      return;
-    }
+    }*/
 
     switch (inputMenuNum) {
       case 1:
@@ -199,6 +185,10 @@ function runTodoApp() {
       case 5:
         running = false;
         break;
+      default:
+        console.log(
+          "Please input a valid Menu Number. Only Menu number 1 to 5 is allowed"
+        );
     }
   }
 }
